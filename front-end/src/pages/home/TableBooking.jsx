@@ -2,7 +2,7 @@ import React from "react";
 
 const TableBooking = () => {
   return (
-    <div className="p-[1rem] md:p-[4rem] bg-lightRose">
+    <div className="p-[1rem] md:p-[4rem] bg-white">
       <div className="bg-gamboge">
         <div>
           <h1 className="flex justify-center text-white font-bold pt-12 text-4xl">

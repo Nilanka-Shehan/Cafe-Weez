@@ -16,7 +16,7 @@ const ReviewBar = () => {
   };
 
   return (
-    <div className="bg-lightRose">
+    <div className="bg-white">
       <div className="flex flex-col lg:flex-row lg:space-x-10 md:justify-center h-[105vh] sm-low:h-[80vh] sm:h-[65vh] md:h-[95vh] lg:h-[80vh] lg-tall:h-[40vh] xl:h-[110vh] xl-low:h-[80vh] p-10">
         <div className="lg:w-3/5">
           <img src="/other/food1.jpeg" alt="" className="h-full w-full border-black" style={{borderWidth : "2px"}}/>

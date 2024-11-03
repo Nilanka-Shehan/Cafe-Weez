@@ -3,16 +3,16 @@ import React from "react";
 const Card = ({ item }) => {
   return (
     <div>
-      <div className="card bg-white sm-low:h-[30vh] sm:h-[70vh] sm-tall:h-[30vh] xl-low:h-[50vh] xl:h-[70vh] w-50 sm-low:w-38 sm:w-50 md:w-60 shadow-xl hover:shadow-2xl">
+      <div className="card bg-gray-200 h-[45vh] sm-low:h-[30vh] sm:h-[70vh] sm-tall:h-[30vh] xl-low:h-[50vh] xl:h-[70vh] w-50 sm-low:w-38 sm:w-50 md:w-60 shadow-xl hover:shadow-2xl">
         <figure className="w-full h-30 sm:h-[15vh] md:h-[35vh]">
           <img
             src={item.image}
             alt=""
-            className="object-contain h-full w-full"
+            className="object-cover h-full w-full"
           />
         </figure>
         <div className="card-body flex flex-col justify-between">
-          <h2 className="card-title h-12 sm:h-auto text-black text-xs sm:text-lg md:text-xl line-clamp-2 sm:line-clamp-1">
+          <h2 className="card-title h-12 sm:h-auto text-black text-auto line-clamp-2">
             {item.name}
           </h2>
           <div className="space-y-3">
