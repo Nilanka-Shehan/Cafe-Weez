@@ -2,7 +2,7 @@ import React from "react";
 
 const BlogBar = () => {
   return (
-    <div className="bg-lightRose">
+    <div className="bg-white">
       <div className="flex justify-center py-10">
         <h1 className="font-bold text-4xl text-blue-600">FROM THE BLOGS</h1>
       </div>

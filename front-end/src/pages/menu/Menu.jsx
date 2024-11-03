@@ -90,7 +90,7 @@ const Menu = () => {
 
   return (
     <div>
-      <div className="bg-lightRose">
+      <div className="bg-white">
         {/*menu banner */}
         <div className="from-[#FAFAFA] from-0% to-[#FCFCFC] to-100%">
           <div className="py-48 flex flex-col justify-center items-center gap-8">
@@ -110,7 +110,7 @@ const Menu = () => {
         </div>
 
         {/*Menu shop section */}
-        <div className="section-container">
+        <div className="section-container object-cover">
           <div className="flex flex-col md:flex-row flex-wrap md:justify-between items-center space-y-3 mb-8">
             {/*filltered and sorting */}
             <div className="flex flex-row justify-start md:items-center md:gap-8 gap-4 flex-wrap text-secondary">
@@ -155,7 +155,7 @@ const Menu = () => {
 
             {/*sorting base filtering */}
             <div className="flex justify-end mb-4 rounded-sm">
-              <div className="bg-black p-2">
+              <div className="bg-gamboge p-2">
                 <FaFilter className="h-4 w-4 text-white" />
               </div>
               {/*sorting options */}
@@ -164,7 +164,7 @@ const Menu = () => {
                 id="sort"
                 onChange={(e) => handelOptions(e.target.value)}
                 value={sortOption}
-                className="bg-black text-white px-2 py-1 rounded-sm"
+                className="bg-gamboge text-white px-2 py-1 rounded-sm"
               >
                 <option value="default">Default</option>
                 <option value="A-Z">A-Z</option>
@@ -176,9 +176,9 @@ const Menu = () => {
           </div>
 
           {/*products card */}
-          <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
+          <div className="grid lg:grid-cols-4 sm:grid-cols-3 grid-cols-2 gap-5">
             {currentItems.map((item) => (
-              <Card key={item._id} item={item} />
+              <Card key={item._id} item={item}/>
             ))}
           </div>
         </div>

@@ -125,7 +125,7 @@ const PopularMenu = () => {
 
   return (
     //Popular Card Items
-    <div className="py-10 relative pb-10 bg-lightRose">
+    <div className="py-10 relative pb-10 bg-white">
       <div className="text-center py-8 text-gamboge">
         <h2 className="font-" style={{ fontFamily: "Dancing Script, cursive" }}>
           Some Text in here
@@ -147,7 +147,7 @@ const PopularMenu = () => {
             <FaAngleRight className="w-8 h-8 p-1" />
           </button>
         </div>
-        <div className="border-lightRose ml-6 lg:ml-12" style={{ borderWidth: "1rem" }}>
+        <div className="border-white ml-6 lg:ml-12" style={{ borderWidth: "1rem" }}>
           <Slider ref={slider} {...settings} className="card-container px-1">
             {cardItems.map((item) => (
               <div key={item._id} className="px-2 sm-low:px-[0.125rem]">
