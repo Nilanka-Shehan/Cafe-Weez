@@ -1,3 +1,22 @@
+/* Tailwind CSS base, components, and utilities */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Signup form designs */
+.form-data {
+    display: flex;
+    flex-direction: column;
+}
+
+form {
+    display: flex; /* Example: Set display to flex for layout */
+    flex-direction: column; /* Arrange children in a column */
+    gap: 1rem; /* Add space between form elements */
+    padding: 1.5rem; /* Add padding inside the form */
+    border: 2px solid #e5a948; /* Set border thickness and color */
+    border-radius: 8px; /* Round the corners */
+    background-color: #f9f9f9; /* Light background color */
+    max-width: 400px; /* Set a maximum width */
+    margin: auto; /* Center the form horizontally */
+}
