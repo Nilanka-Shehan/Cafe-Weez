@@ -1,8 +1,18 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import useAuth from "../hooks/useAth";
+import Profile from "./Profile";
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isSticky, setSticky] = useState(false);
+  const { user } = useAuth();
+
+  const navigate = useNavigate();
+
+  const handleOnClick = () => {
+    navigate("/login");
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -48,16 +58,27 @@ const NavBar = () => {
         </a>
       </li>
       <li>
-        <a href="/contact" className="text-gamboge">
-          Contact
-        </a>
+        {user ? (
+          <Profile user={user}/>
+        ) : (
+          <button
+            onClick={handleOnClick}
+            className="btn bg-gamboge rounded-full text-white"
+          >
+            Login
+          </button>
+        )}
       </li>
     </>
   );
 
   return (
     <header className="max-w-screen-2xl container mx-auto bg-black fixed top-0 left-0 right-0 transition-all duration-300 ease-in-out">
-      <div className={`navbar ${isSticky ? "bg-black bg-opacity-10 shadow-lg" : "bg-transparent"} transition-all duration-300`}>
+      <div
+        className={`navbar ${
+          isSticky ? "bg-black bg-opacity-10 shadow-lg" : "bg-transparent"
+        } transition-all duration-300`}
+      >
         <div className="flex-1 pl-10">
           <img className="w-12 h-12" src="/logo.jpg" alt="Logo" />
         </div>
@@ -104,9 +125,7 @@ const NavBar = () => {
 
         {/* for large devices, navItems display as row */}
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">
-            {navItems}
-          </ul>
+          <ul className="menu menu-horizontal px-1">{navItems}</ul>
         </div>
       </div>
     </header>
