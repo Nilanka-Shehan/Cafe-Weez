@@ -6,7 +6,10 @@ const users = new Schema({
   username: {
     type: String,
     trim: true,
-    required: true,
+    required: function () {
+      // Require username only if the user is not created via Google
+      return !this.googleId;
+    },
     minlength: 3,
   },
 
@@ -21,15 +24,31 @@ const users = new Schema({
 
   password: {
     type: String,
-    required: true,
+    required: function () {
+      // Password is required only if the user is not created via Google
+      return !this.googleId;
+    },
     minlength: 6,
     maxlength: 128,
     trim: true,
   },
 
+  googleId: {
+    type: String,
+    unique: true,
+    sparse: true, // Allows null values for non-Google users
+  },
+
   photoURL: {
     type: String,
   },
+
+  role: {
+    type: String,
+    enum: ["user", "admin", "cashier", "owner"],
+    default: "user",
+  },
+
   createdAt: {
     type: Date,
     default: new Date(),
@@ -43,8 +62,7 @@ users.pre("save", async function (next) {
   }
 
   if (!this.password) {
-    console.error("Password is undefined!");
-    throw new Error("Password must be provided before saving");
+    return next(); // Allow saving Google users without a password
   }
 
   try {

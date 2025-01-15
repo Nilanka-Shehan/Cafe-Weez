@@ -16,11 +16,22 @@ const ReviewBar = () => {
   };
 
   return (
-    <div className="bg-white">
-      <div className="flex flex-col lg:flex-row lg:space-x-10 md:justify-center h-[105vh] sm-low:h-[80vh] sm:h-[65vh] md:h-[95vh] lg:h-[80vh] lg-tall:h-[40vh] xl:h-[110vh] xl-low:h-[80vh] p-10">
-        <div className="lg:w-3/5">
-          <img src="/other/food1.jpeg" alt="" className="h-full w-full border-black" style={{borderWidth : "2px"}}/>
+    <div className="bg-[#151515] P-10 ">
+       <div className="flex justify-center py-5">
+        <h1 className="font-bold text-4xl text-white">Feed backs</h1>
+      </div>
+      <div className="flex flex-col lg:flex-row lg:space-x-10 md:justify-center h-[50vh] sm:h-[80vh] md:h-[35vh] lg:h-[40vh] xl:h-[60vh] p-10">
+       
+        {/* Left Image Section */}
+        <div className="lg:w-3/5 h-full">
+          <img
+            src="/other/food1.jpeg"
+            alt="Food"
+            className="h-full w-full object-cover rounded-xl shadow-lg"
+          />
         </div>
+
+        {/* Right Slider Section */}
         <div className="flex mt-10 lg:mt-0 lg:w-[455px] lg:items-center">
           <div className="slider-container w-full">
             <Slider {...settings}>

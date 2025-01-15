@@ -1,22 +1,24 @@
-import React from 'react'
-import Banner from './Banner'
-import BlogBar from './BlogBar'
-import PopularMenu from './PopularMenu'
-import ReviewBar from './ReviewBar'
-import Service from './Service'
-import TableBooking from './TableBooking'
+import React from "react";
+import Banner from "./Banner";
+import BlogBar from "./BlogBar";
+import PopularMenu from "./PopularMenu";
+import ReviewBar from "./ReviewBar";
+import Service from "./Service";
 
 const Home = () => {
   return (
-    <div>
-      <Banner/>
-      <PopularMenu/>
-      <Service/>
-      <TableBooking/>
-      <ReviewBar/>
-      <BlogBar/>
-    </div>
-  )
-}
+    <>
+      <main className="flex-1 pt-20 md:pt-18 w-full bg-white ">
+        <Banner />
 
-export default Home
+        <PopularMenu />
+        <Service />
+        <ReviewBar />
+
+        <BlogBar />
+      </main>
+    </>
+  );
+};
+
+export default Home;

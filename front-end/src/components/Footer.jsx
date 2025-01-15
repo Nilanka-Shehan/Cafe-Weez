@@ -1,44 +1,82 @@
-import React from "react";
-import { FaMapMarkerAlt } from "react-icons/fa";
-import { MdOutgoingMail, MdOutlinePhoneForwarded } from "react-icons/md";
+import React from 'react';
+import { FaFacebook, FaInstagram, FaTwitter } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
+  const navLinks = [
+    { path: '/', label: 'Home' },
+    { path: '/about', label: 'About' },
+    { path: '/contact', label: 'Contact' },
+  ];
+
+  const socialMediaLinks = [
+    { href: 'https://facebook.com', icon: <FaFacebook /> },
+    { href: 'https://twitter.com', icon: <FaTwitter /> },
+    { href: 'https://instagram.com', icon: <FaInstagram /> },
+  ];
+
   return (
-    <footer className="footer-background bg-black text-white py-8 h-[80vh] sm:h-auto">
-      <div className="container mx-auto h-auto flex flex-col md:flex-row sm:items-end md:items-center space-y-10 md:space-x-[10rem] items-center">
-        {/* Google Map Embed */}
-        <div className="w-full md:w-1/2">
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3957.631634101585!2d80.61977657410317!3d7.282686213877585!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae369224c87d109%3A0x1f9ee574a1cc3a!2sCafe%20Weez!5e0!3m2!1sen!2slk!4v1729875452350!5m2!1sen!2slk"
-            className="image w-full h-[30vh] md:h-[450px] border-0 p-1 md:pr-3"
-            allowFullScreen=""
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-          />{" "}
+    <footer className="bg-[#151515] text-[#EEEEEE] py-8">
+      <div className="container mx-auto px-4 lg:px-10">
+        {/* Grid Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Section 1: Logo and Contact Info */}
+          <div>
+            <Link to="/" className="flex items-center mb-4">
+              <img src="/logo.jpg" alt="Logo" className="w-12 h-12" />
+              <span className="ml-3 font-bold text-lg">WEEZ CAFE</span>
+            </Link>
+            <p className="text-sm">
+              Contact us at:
+              <br />
+              <a
+                href="tel:+1234567890"
+                className="text-[#A91D3A] hover:text-[#C73659] transition-colors"
+              >
+                +123 456 7890
+              </a>
+            </p>
+          </div>
+
+          {/* Section 2: Navigation Links */}
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
+            <ul className="space-y-2">
+              {navLinks.map((link) => (
+                <li key={link.path}>
+                  <Link
+                    to={link.path}
+                    className="hover:text-[#C73659] transition-colors"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Section 3: Social Media */}
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Follow Us</h3>
+            <div className="flex space-x-4">
+              {socialMediaLinks.map((social, index) => (
+                <a
+                  key={index}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#A91D3A] hover:text-[#C73659] transition-colors text-2xl"
+                >
+                  {social.icon}
+                </a>
+              ))}
+            </div>
+          </div>
         </div>
-        {/* Footer Content */}
-        <div className="h-[20vh] flex flex-col space-y-5 sm:space-y-10">
-          <div className="text-gamboge text-2xl sm:text-4xl underline">
-            CONTACT US
-          </div>
-          <div className="flex flex-row space-x-5">
-            <FaMapMarkerAlt className="text-gamboge text-2xl sm:text-4xl" />
-            <h4 className="text-sm">
-              Address : No 589 Peradeniya Rd,
-              <br /> Kandy 20000
-            </h4>
-          </div>
-          <div className="flex flex-row space-x-5">
-            <MdOutlinePhoneForwarded className="text-gamboge text-2xl sm:text-4xl" />
-            <h4 className="text-sm">Phone : (+94) 77 442 2448</h4>
-          </div>
-          <div className="flex flex-row space-x-5">
-            <MdOutgoingMail className="text-gamboge text-2xl sm:text-4xl" />
-            <h4 className="text-sm">
-              eMail : <br />
-              cafeweez@gmail.com
-            </h4>
-          </div>
+
+        {/* Footer Bottom */}
+        <div className="mt-8 border-t border-[#EEEEEE]/20 pt-4 text-center text-sm">
+          &copy; {new Date().getFullYear()} WEEZ CAFE. All rights reserved.
         </div>
       </div>
     </footer>

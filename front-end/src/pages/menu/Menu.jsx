@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FaFilter } from "react-icons/fa";
 import Card from "../../components/Card";
 
@@ -92,13 +92,13 @@ const Menu = () => {
     <div>
       <div className="bg-white">
         {/*menu banner */}
-        <div className="from-[#FAFAFA] from-0% to-[#FCFCFC] to-100%">
-          <div className="py-48 flex flex-col justify-center items-center gap-8">
+        <div className="from-[#FAFAFA] from-0% to-[#FCFCFC] to-100% ">
+          <div className="py-48 flex flex-col justify-center items-center gap-2">
             {/*texts */}
             <div className="text-center space-y-7 px-8">
               <h2 className="md:text-5xl text-4xl text-black font-bold md:leading-snug leading-snug">
                 For the Love of Delicious
-                <span className="text-gamboge"> Food</span>
+                <span className="text-carmine"> Food</span>
               </h2>
               <p className="text-xl text-[#4A4A4A] md:w-8/9 mx-auto">
                 Come with family & feel the joy of mounthwatering food as Geek
@@ -122,40 +122,94 @@ const Menu = () => {
                 All
               </button>
               <button
+                onClick={() => fillterItems("rice")}
+                className={selectedCategory === "rice" ? "active" : ""}
+              >
+                Rice
+              </button>
+              <button
+                onClick={() => fillterItems("pasta")}
+                className={selectedCategory === "pasta" ? "active" : ""}
+              >
+                Pasta
+              </button>
+              <button
+                onClick={() => fillterItems("kottu")}
+                className={selectedCategory === "kottu" ? "active" : ""}
+              >
+                Kottu
+              </button>
+              <button
+                onClick={() => fillterItems("street-food")}
+                className={selectedCategory === "street-food" ? "active" : ""}
+              >
+                Street Food
+              </button>
+              <button
+                onClick={() => fillterItems("main-meals")}
+                className={selectedCategory === "main-meals" ? "active" : ""}
+              >
+                Main Meals
+              </button>
+              <button
+                onClick={() => fillterItems("noodles")}
+                className={selectedCategory === "noodles" ? "active" : ""}
+              >
+                Noodles
+              </button>
+              <button
+                onClick={() => fillterItems("seafood")}
+                className={selectedCategory === "seafood" ? "active" : ""}
+              >
+                Seafood
+              </button>
+              <button
+                onClick={() => fillterItems("soups")}
+                className={selectedCategory === "soups" ? "active" : ""}
+              >
+                Soups
+              </button>
+              <button
                 onClick={() => fillterItems("salad")}
                 className={selectedCategory === "salad" ? "active" : ""}
               >
                 Salad
               </button>
               <button
-                onClick={() => fillterItems("pizza")}
-                className={selectedCategory === "pizza" ? "active" : ""}
+                onClick={() => fillterItems("chicken")}
+                className={selectedCategory === "chicken" ? "active" : ""}
               >
-                Pizza
+                Chicken
               </button>
               <button
-                onClick={() => fillterItems("soup")}
-                className={selectedCategory === "soup" ? "active" : ""}
+                onClick={() => fillterItems("juice")}
+                className={selectedCategory === "juice" ? "active" : ""}
               >
-                Soups
+                Juice
               </button>
               <button
-                onClick={() => fillterItems("dessert")}
-                className={selectedCategory === "dessert" ? "active" : ""}
+                onClick={() => fillterItems("soft-drinks")}
+                className={selectedCategory === "soft-drinks" ? "active" : ""}
+              >
+                Soft Drinks
+              </button>
+              <button
+                onClick={() => fillterItems("hot-beverages")}
+                className={selectedCategory === "hot-beverages" ? "active" : ""}
+              >
+                Hot Beverages
+              </button>
+              <button
+                onClick={() => fillterItems("deserts")}
+                className={selectedCategory === "deserts" ? "active" : ""}
               >
                 Deserts
-              </button>
-              <button
-                onClick={() => fillterItems("drinks")}
-                className={selectedCategory === "drinks" ? "active" : ""}
-              >
-                Drinks
               </button>
             </div>
 
             {/*sorting base filtering */}
             <div className="flex justify-end mb-4 rounded-sm">
-              <div className="bg-gamboge p-2">
+              <div className="bg-rose-red p-2">
                 <FaFilter className="h-4 w-4 text-white" />
               </div>
               {/*sorting options */}
@@ -164,7 +218,7 @@ const Menu = () => {
                 id="sort"
                 onChange={(e) => handelOptions(e.target.value)}
                 value={sortOption}
-                className="bg-gamboge text-white px-2 py-1 rounded-sm"
+                className="bg-rose-red text-white px-2 py-1 rounded-sm"
               >
                 <option value="default">Default</option>
                 <option value="A-Z">A-Z</option>
@@ -178,7 +232,7 @@ const Menu = () => {
           {/*products card */}
           <div className="grid lg:grid-cols-4 sm:grid-cols-3 grid-cols-2 gap-5">
             {currentItems.map((item) => (
-              <Card key={item._id} item={item}/>
+              <Card key={item._id} item={item} />
             ))}
           </div>
         </div>
@@ -193,7 +247,7 @@ const Menu = () => {
               onClick={() => paginate(index + 1)}
               className={`mx-1 px-3 py-1 rounded-full ${
                 currentPage === index + 1
-                  ? "bg-gamboge text-white"
+                  ? "bg-carmine text-white"
                   : "bg-gray-200 text-secondary"
               }`}
             >

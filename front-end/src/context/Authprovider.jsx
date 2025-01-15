@@ -4,7 +4,7 @@ import { createContext, useEffect, useState } from "react";
 
 export const AuthContext = createContext();
 
-const AuthProvider = ({ children }) => {
+export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -18,6 +18,7 @@ const AuthProvider = ({ children }) => {
       if (data.success) {
         localStorage.setItem("access-token", data.token);
         setUser(data.user);
+        window.location.href = "/";
         return { success: true, message: data.message, user: data.user };
       } else {
         return { success: false, message: data.message };
@@ -27,6 +28,44 @@ const AuthProvider = ({ children }) => {
         success: false,
         message: error.response?.data?.message || "Login failed",
       };
+    }
+  };
+
+  //google login
+  const googleLogin = async (response) => {
+    const { credential } = response;
+
+    if (!credential) {
+      console.error("Google login failed: Missing credential.");
+      return {
+        success: false,
+        message: "Google login failed: Missing credential.",
+      };
+    }
+
+    try {
+      const { data } = await axios.post(
+        "http://localhost:3001/user/google-login",
+        {
+          token: credential, // Send credential as token
+        }
+      );
+
+      if (data.success) {
+        console.log(data);
+        localStorage.setItem("access-token", data.token);
+        setUser(data.user);
+        return data;
+      } else {
+        console.error("Google login failed:", data.message);
+        return data;
+      }
+    } catch (error) {
+      console.error(
+        "Error during Google login:",
+        error.response?.data || error.message
+      );
+      return { success: false, message: "Google login failed." };
     }
   };
 
@@ -64,12 +103,18 @@ const AuthProvider = ({ children }) => {
       const token = localStorage.getItem("access-token");
       if (token) {
         try {
-          await axios.get("http://localhost:3001/user", {
+          const { data } = await axios.get("http://localhost:3001/user/me", {
             headers: { Authorization: `Bearer ${token}` },
           });
+
+          if (data.success) {
+            setUser(data.user);
+          } else {
+            logout();
+          }
         } catch (error) {
           console.error("Error fetching user : ", error.message);
-          logout();
+          localStorage.removeItem("access-token");
         }
       }
       setLoading(false);
@@ -83,10 +128,13 @@ const AuthProvider = ({ children }) => {
     signup,
     logout,
     loading,
+    googleLogin,
   };
 
   return (
-    <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={authInfo}>
+      {loading ? <div>Loading...</div> : children} {/* Added loading check */}
+    </AuthContext.Provider>
   );
 };
 
@@ -95,4 +143,3 @@ AuthProvider.propTypes = {
 };
 
 export default AuthProvider;
-

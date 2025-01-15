@@ -1,16 +1,25 @@
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
+import Swal from "sweetalert2";
 import useAuth from "../hooks/useAth";
+import useRoleCheck from "../hooks/useRoleCheck";
 
 const Profile = ({ user }) => {
   const { logout } = useAuth();
+  const [hasAccess, isLoading, isError] = useRoleCheck(["admin", "cashier"]);
 
   const handleLogout = () => {
     logout()
       .then(() => {
-        alert("Logout successfully");
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "User Logout Successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       });
   };
 
@@ -24,14 +33,16 @@ const Profile = ({ user }) => {
             className="drawer-button btn btn-ghost btn-circle avatar"
           >
             <div className="w-10 rounded-full">
-              {user.photoURL ? (
-                <img alt="Tailwind CSS Navbar component" src={user.photoURL} />
-              ) : (
-                <img
-                  alt="Tailwind CSS Navbar component"
-                  src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-                />
-              )}
+              {user.photoURL &&
+                (user.photoURL.startsWith("http") ? (
+                  <img alt="User Avatar" src={user.photoURL} />
+                ) : (
+                  <div className="flex items-center justify-center w-10 h-10 bg-gamboge rounded-full">
+                    <span className="text-lg font-bold text-white">
+                      {user.photoURL}
+                    </span>
+                  </div>
+                ))}
             </div>
           </label>
         </div>
@@ -43,17 +54,40 @@ const Profile = ({ user }) => {
           ></label>
           <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
             <li>
-              <a href="/update-profile">Profile</a>
+              <a href="*">Profile</a>
             </li>
             <li>
-              <a>Order</a>
+              <a href="*">Order</a>
             </li>
             <li>
-              <a>Settings</a>
+              <a href="*">Settings</a>
             </li>
             <li>
               <a onClick={handleLogout}>Logout</a>
             </li>
+            {isLoading ? (
+              <li>Loading...</li>
+            ) : isError ? (
+              <li>Error loading role</li>
+            ) : (
+              <>
+                {user.role === "admin" && (
+                  <>
+                    <li>
+                      <a href="/dashboard">Dashboard</a>
+                    </li>
+                    <li>
+                      <a href="/order-dashboard">Order Details</a>
+                    </li>
+                  </>
+                )}
+                {user.role === "cashier" && (
+                  <li>
+                    <a href="/order-dashboard">Order Details</a>
+                  </li>
+                )}
+              </>
+            )}
           </ul>
         </div>
       </div>
@@ -61,10 +95,10 @@ const Profile = ({ user }) => {
   );
 };
 
-// Define prop types for the Profile component
 Profile.propTypes = {
   user: PropTypes.shape({
     photoURL: PropTypes.string,
+    role: PropTypes.string.isRequired, // Ensure role is provided
   }).isRequired,
 };
 
