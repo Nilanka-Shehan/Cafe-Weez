@@ -1,21 +1,21 @@
 const express = require("express");
-const Menu = require("../models/Menu")
+const upload = require("../middlewares/upload");
+const {
+  addMenuItems,
+  getAllMenuItems,
+  updateItems,
+  deleteItems,
+  getSingleItem,
+} = require("../controllers/menuController");
+const verifyToken = require("../middlewares/verifyToken");
+const verifyRoles = require("../middlewares/verifyRoles");
+
 const router = express.Router();
-const menuController = require("../controllers/menuController")
 
-//add menuItems
-router.post('/',menuController.addMenuItems);
-
-//get All Menu Items
-router.get('/',menuController.getAllMenuItems);
-
-//update menuh Items 
-router.patch('/:id',menuController.updateItems);
-
-//delete menu Items
-router.delete('/:id',menuController.deleteItems);
-
-//get Single Menu Item
-router.get('/:id',menuController.getSingleItem)
+router.post("/", upload.single("image"), addMenuItems);
+router.get("/", getAllMenuItems);
+router.put("/:id", upload.single("image"), updateItems);
+router.delete("/:id", verifyToken, verifyRoles("admin"), deleteItems);
+router.get("/:id", getSingleItem);
 
 module.exports = router;

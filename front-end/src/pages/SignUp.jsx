@@ -5,14 +5,17 @@ import useAuth from "../hooks/useAth";
 
 const Signup = () => {
   const navigate = useNavigate();
-  const { signup, login } = useAuth();
+  const { signup, login, loading } = useAuth();
   const [inputValue, setInputValue] = useState({
     username: "",
     email: "",
     password: "",
+    confirmPassword: "",
   });
+  const [error, setError] = useState(null);
 
-  const { username, email, password } = inputValue;
+  const { username, email, password, confirmPassword } = inputValue;
+
   const handleOnChange = (e) => {
     const { name, value } = e.target;
     setInputValue({
@@ -23,22 +26,12 @@ const Signup = () => {
 
   const handleError = (msg) =>
     Swal.fire({
-      title: msg,
-      showClass: {
-        popup: `
-          animate__animated
-          animate__fadeInUp
-          animate__faster
-        `,
-      },
-      hideClass: {
-        popup: `
-          animate__animated
-          animate__fadeOutDown
-          animate__faster
-        `,
-      },
+      title: "Error",
+      text: msg,
+      icon: "error",
+      confirmButtonText: "OK",
     });
+
   const handleSuccess = (msg) =>
     Swal.fire({
       position: "center",
@@ -50,19 +43,24 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!email || !username || !password) {
-      return handleError("All fields are required");
+
+    if (!username || !email || !password || !confirmPassword) {
+      return handleError("All fields are required.");
     }
 
-    //setLoading(true)=========
+    if (password !== confirmPassword) {
+      return handleError("Passwords do not match.");
+    }
 
+    // setIsLoading(true);
     try {
       const response = await signup(username, email, password);
+
       if (response.success) {
         handleSuccess(response.message);
+
         const loginResponse = await login(email, password);
         if (loginResponse.success) {
-          console.log(loginResponse.user);
           navigate("/");
         } else {
           handleError(loginResponse.message);
@@ -72,99 +70,117 @@ const Signup = () => {
       }
     } catch (error) {
       console.error(error);
+      handleError("Signup failed. Please try again.");
     } finally {
-      //setLoading(false)
+      // setIsLoading(false);
       setInputValue({
-        ...inputValue,
+        username: "",
         email: "",
         password: "",
-        username: "",
+        confirmPassword: "",
       });
     }
   };
 
   return (
-    <div className="flex flex-raw h-screen">
-      <div className="hidden md:block h-full w-1/3 bg-white">
-        <img src="/other/food2.jpeg" alt="" className="h-screen w-full" />
-      </div>
-      <div className="flex items-center justify-center h-screen px-10 md:px-0 md:w-2/3">
-        <form
-          onSubmit={handleSubmit}
-          className="flex flex-col w-full max-w-sm md:w-3/4 p-4 bg-white rounded-md shadow-md"
-        >
-          <div className="flex justify-end">
-            <Link to={"/"}>
-              <button className="rounded-full bg-gamboge w-6 text-white hover:bg-black">
-                X
-              </button>
-            </Link>
-          </div>
-          <h2 className="text-center text-black font-semibold">
-            Create an Account
+    <div className="min-h-screen flex items-center justify-center bg-[#C73659]">
+      <div className="w-full max-w-4xl p-8 bg-white rounded-lg shadow-lg grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* Left column (Image) */}
+        <div className="flex justify-center items-center">
+          <img
+            src="/logo.jpg"
+            alt="Company Logo"
+            className="max-w-[300px] w-full h-auto"
+          />
+        </div>
+
+        {/* Right column (Form) */}
+        <div className="flex flex-col items-center justify-center space-y-6">
+          <h2 className="text-3xl font-semibold text-center text-gray-800">
+            Sign Up
           </h2>
-          <div className="form-data">
-            <label htmlFor="username" className="text-secondary">
-              UserName
-            </label>
-            <input
-              id="username"
-              type="text"
-              name="username"
-              value={username}
-              placeholder="Enter your UserName"
-              onChange={handleOnChange}
-              className="bg-white"
-            />
-          </div>
-          <div className="form-data">
-            <label htmlFor="email" className="text-secondary">
-              Email
-            </label>
-            <input
-              id="email"
-              type="email"
-              name="email"
-              value={email}
-              placeholder="Enter your Email"
-              onChange={handleOnChange}
-              className="bg-white"
-            />
-          </div>
-          <div className="form-data">
-            <label htmlFor="password" className="text-secondary">
-              Password
-            </label>
-            <input
-              id="password"
-              type="password"
-              name="password"
-              value={password}
-              placeholder="Enter your Password"
-              onChange={handleOnChange}
-              className="bg-white"
-            />
-          </div>
-          <span className="text-secondary mt-10">
-            Have an account?{" "}
-            <Link to={"/login"} className="text-blue-600">
+          <form onSubmit={handleSubmit} className="space-y-4 w-full max-w-md">
+            <div>
+              <label htmlFor="username" className="block text-sm text-gray-600">
+                Username
+              </label>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                placeholder="Enter your username"
+                className="w-full mt-1 p-2 rounded-md bg-gray-100 text-gray-700 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                value={username}
+                onChange={handleOnChange}
+                required
+              />
+            </div>
+            <div>
+              <label htmlFor="email" className="block text-sm text-gray-600">
+                Email Address
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Enter your email"
+                className="w-full mt-1 p-2 rounded-md bg-gray-100 text-gray-700 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                value={email}
+                onChange={handleOnChange}
+                required
+              />
+            </div>
+            <div>
+              <label htmlFor="password" className="block text-sm text-gray-600">
+                Password
+              </label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Enter your password"
+                className="w-full mt-1 p-2 rounded-md bg-gray-100 text-gray-700 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                value={password}
+                onChange={handleOnChange}
+                required
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="confirmPassword"
+                className="block text-sm text-gray-600"
+              >
+                Confirm Password
+              </label>
+              <input
+                type="password"
+                id="confirmPassword"
+                name="confirmPassword"
+                placeholder="Re-enter your password"
+                className="w-full mt-1 p-2 rounded-md bg-gray-100 text-gray-700 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                value={confirmPassword}
+                onChange={handleOnChange}
+                required
+              />
+            </div>
+            <button
+              type="submit"
+              className="w-full py-2 bg-[#C73659] rounded-md text-white hover:bg-[#A91D3A] transition-colors"
+              // disabled={isLoading}
+            >
+              {loading ? "Signing Up..." : "Sign Up"}
+            </button>
+          </form>
+
+          {error && <p className="text-red-500 text-center">{error}</p>}
+
+          <p className="text-center text-sm mt-4 text-gray-600">
+            Already have an account?{" "}
+            <Link to="/login" className="text-teal-400 hover:underline">
               Login
             </Link>
-          </span>
-          <button
-            type="submit"
-            className="btn bg-gamboge rounded-full text-white"
-          >
-            SignIn
-          </button>
-          {/* <button
-            type="submit"
-            className="btn bg-gamboge rounded-full text-white"
-            disabled={loading}
-          >
-            {loading ? "Signing up..." : "SignUp"}
-          </button> */}
-        </form>
+          </p>
+        </div>
       </div>
     </div>
   );

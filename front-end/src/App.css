@@ -1,5 +1,5 @@
 .section-container{
-  @apply max-w-screen-2xl container mx-auto xl:px-24 px-4
+  @apply max-w-screen-xl container mx-auto xl:px-24 px-4 
 }
 header{
   z-index:10001 !important
@@ -42,7 +42,7 @@ html, body {
 /* Non-hovered images will shrink */
 .image:hover ~ .image {
   transform: scale(0.8);
-  z-index: 1; /* Send the other image to the back */
+  z-index: 1;
 }
 
 
@@ -51,18 +51,37 @@ html, body {
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('footer.jpg');
   background-size: cover;
   background-position: center;
-  color: white; /* Optional: text color */
+  color: white; 
 }
 
 /* Menu page styles */
 .active{
   text-decoration: underline;
   text-underline-offset: 5px;
-  color:#E49B0F;
+  color:#D70040;
 }
 
+/*file input*/
+.custom-file-upload {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
 
+.file-input-label {
+  display: inline-block;
+  background-color: #C73659; 
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
+.file-input-label:hover {
+  background-color: #D70040; 
+}
 
-
-
+.hidden {
+  display: none;
+}
